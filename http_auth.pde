@@ -8,7 +8,15 @@ import org.apache.http.HttpStatus;
 import org.apache.http.util.EntityUtils;
 import org.apache.http.client.ClientProtocolException;
 
-public String[] loginSalesforce(String username, String password, String url, String grantService, String clientId, String clientSecret) {
+public String[] loginSalesforce(String[] salesforceLogin) {
+ 
+  // split array into strings to pass to httpclient
+  String username = salesforceLogin[0];
+  String password = salesforceLogin[1];
+  String url = salesforceLogin[2];
+  String grantService = salesforceLogin[3];
+  String clientId = salesforceLogin[4];
+  String clientSecret = salesforceLogin[5];
   
   //string for output of token and url
   String[] accessDetails = new String[2];
@@ -138,12 +146,14 @@ Boolean insertSlide( String[] accessDetails, String[] rideDetails) {
 
 void setup () { 
   
-  String username = "mick.wheelz@gmail.com";
-  String password = "InItial89ULi8HaMXOIx418iTkHK6gmTPT";
-  String url = "https://login.salesforce.com";
-  String grantService ="/services/oauth2/token?grant_type=password";
-  String clientId = "3MVG9Y6d_Btp4xp5LLJdvxJXv2qYyLbJtrC13AyKJVy1l9h9xq2eQzIGhC5IaQiCOnt0Btssf1NUL1BckOZad";
-  String clientSecret = "3875746611375330421";
+  String[] salesforceLoginDetails = new String[6];
+  
+  salesforceLoginDetails[0] = "mick.wheelz@gmail.com"; //username
+  salesforceLoginDetails[1] = "InItial89ULi8HaMXOIx418iTkHK6gmTPT"; //password and token
+  salesforceLoginDetails[2] = "https://login.salesforce.com"; //login url
+  salesforceLoginDetails[3] ="/services/oauth2/token?grant_type=password"; // grant type
+  salesforceLoginDetails[4] = "3MVG9Y6d_Btp4xp5LLJdvxJXv2qYyLbJtrC13AyKJVy1l9h9xq2eQzIGhC5IaQiCOnt0Btssf1NUL1BckOZad"; //client id
+  salesforceLoginDetails[5] = "3875746611375330421"; //client secret
   
   String[] testData = new String[8];
   
@@ -157,7 +167,7 @@ void setup () {
   testData[7] = "10.10";
  
   int t = millis();
-  String[] accessDetails = loginSalesforce(username, password, url, grantService, clientId, clientSecret);
+  String[] accessDetails = loginSalesforce(salesforceLoginDetails);
   int r = millis() - t;
   
 //int x = millis();
