@@ -98,37 +98,29 @@ Boolean insertSlide( String[] accessDetails, String[] rideDetails) {
   ride = new JSONObject();
 
   ride.setString("Barcode__c", rideDetails[0]);
-  ride.setString("ET__c", rideDetails[1]);
-  ride.setString("Reaction_Time__c", rideDetails[1]);
-  ride.setString("Sector_1__c", rideDetails[2]);
-  ride.setString("Sector_2__c", rideDetails[3]);
-  ride.setString("Sector_3__c", rideDetails[4]);
-  ride.setString("Sector_4__c", rideDetails[5]);
-  ride.setString("Speed__c", rideDetails[6]);
-  ride.setString("Total_Time__c", rideDetails[7]);
+  ride.setFloat("ET__c", Float.valueOf(rideDetails[1]));
+  ride.setFloat("Reaction_Time__c", Float.valueOf(rideDetails[1]));
+  ride.setFloat("Sector_1__c", Float.valueOf(rideDetails[2]));
+  ride.setFloat("Sector_2__c", Float.valueOf(rideDetails[3]));
+  ride.setFloat("Sector_3__c", Float.valueOf(rideDetails[4]));
+  ride.setFloat("Sector_4__c", Float.valueOf(rideDetails[5]));
+  ride.setFloat("Speed__c", Float.valueOf(rideDetails[6]));
+  ride.setFloat("Total_Time__c", Float.valueOf(rideDetails[7]));
  
   HttpPost post = new HttpPost(accessDetails[1] + "/services/data/v29.0/sobjects/Slide_Run__c/");
   post.setHeader("Authorization", "OAuth " + accessDetails[0]);
   post.addHeader("Content-Type", "application/json");
- // List<NameValuePair> nameValuePairs = new
- // ArrayList<NameValuePair>(1);
- // nameValuePairs.add(new BasicNameValuePair("Barcode__c", rideDetails[0]));
- // post.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-  
-  
-  /*
-  String rideString = ride.toString();
+
   try {
-  StringEntity params = new StringEntity(rideString);
+  StringEntity params = new StringEntity(ride.toString());
     post.setEntity( params );
-    System.out.println(rideString);
+    System.out.println(ride);
   }
   
   catch(Exception uee) {
     uee.printStackTrace();
-  } */
-  
-
+  }
+ 
   try {
     HttpResponse response = httpclient.execute(post);
     System.out.println(response);
@@ -155,42 +147,37 @@ void setup () {
   
   String[] testData = new String[8];
   
- testData[0] = "005";
- testData[1] = "10.10";
- testData[2] = "10.10";
- testData[3] = "10.10";
- testData[4] = "10.10";
- testData[5] = "10.10";
- testData[6] = "10.10";
- testData[7] = "10.10";
-
+  testData[0] = "005";
+  testData[1] = "10.10";
+  testData[2] = "10.10";
+  testData[3] = "10.10";   
+  testData[4] = "10.10";
+  testData[5] = "10.10";
+  testData[6] = "10.10";
+  testData[7] = "10.10";
  
-  
   int t = millis();
   String[] accessDetails = loginSalesforce(username, password, url, grantService, clientId, clientSecret);
   int r = millis() - t;
   
+//int x = millis();
+//String productResult = readProducts(accessDetails);
+//int y = millis() - x;
   
- // int x = millis();
-//  String productResult = readProducts(accessDetails);
-//  int y = millis() - x;
   
+  int x = millis();
   Boolean insertSlideResult = insertSlide(accessDetails, testData);
-  
-  
+  int y = millis() - x;
   
   System.out.println(accessDetails[0]);
-  
   System.out.println("Login Time: " + r);
-  
-  // System.out.println(productResult);
-  
- // System.out.println("List Product Time: " + y);
+
+//System.out.println(productResult);  
+//System.out.println("List Product Time: " + y);
   
   System.out.println("Insert Success: " + insertSlideResult);
-  
-  
-  
+  System.out.println("Insert Time: " + y);
+
 }
 
 
