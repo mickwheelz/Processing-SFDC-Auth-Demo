@@ -172,7 +172,7 @@ void setup () {
   Boolean insertSlideResult = insertSlide(accessDetails, rideTest);
   int y = millis() - x;
   
-  System.out.println(accessDetails[0]);
+  System.out.println("Token: " + accessDetails[0]);
   System.out.println("Login Time: " + r);
 
 //System.out.println(productResult);  
